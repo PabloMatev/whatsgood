@@ -1,12 +1,14 @@
 import React, { Component } from "react";
-import Modal from "./Modal";
+import ModalAdd from "./ModalAdd";
+import ModalLogin from "./ModalLogin";
 
 export default class Homepage extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      isModalOpened: false,
+      isModalAddOpened: false,
+      isModalLoginOpened: false,
     };
   }
   searchField = "";
@@ -14,14 +16,22 @@ export default class Homepage extends Component {
     return (
       <div>
         <div>
-          <button onClick={() => this.setState({ isModalOpened: true })}>
-            Add User
+          <button onClick={() => this.setState({ isModalLoginOpened: true })}>
+            Login
           </button>
-          <Modal
+          <ModalLogin
             addUsertoTable={this.addUsertoTable}
-            isOpened={this.state.isModalOpened}
-            onClose={() => this.setState({ isModalOpened: false })}
-          ></Modal>
+            isOpened={this.state.isModalLoginOpened}
+            onClose={() => this.setState({ isModalLoginOpened: false })}
+          ></ModalLogin>
+          <button onClick={() => this.setState({ isModalAddOpened: true })}>
+            Register
+          </button>
+          <ModalAdd
+            addUsertoTable={this.addUsertoTable}
+            isOpened={this.state.isModalAddOpened}
+            onClose={() => this.setState({ isModalAddOpened: false })}
+          ></ModalAdd>
           <input
             type="text"
             placeholder="Search..."
