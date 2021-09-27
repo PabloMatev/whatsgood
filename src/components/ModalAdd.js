@@ -5,14 +5,14 @@ import axios from "axios";
 
 const portalRoot = document.getElementById("portal-root");
 
-const ModalAdd = ({ isOpened, children, onClose, addUsertoTable }) => {
+const ModalAdd = ({ isOpened, onClose }) => {
   if (!isOpened) {
     return null;
   }
   const addUser = (data) => {
     axios.post("http://localhost:5000/users", data).then((res) => {
       data._id = res.data;
-      addUsertoTable(data);
+      // addUsertoTable(data);
     });
   };
   let personalSet = {
