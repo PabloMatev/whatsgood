@@ -9,11 +9,9 @@ const ModalLogin = ({ isOpened, children, onClose, addUsertoTable }) => {
   if (!isOpened) {
     return null;
   }
-  const addUser = (data) => {
-    axios.post("http://localhost:5000/users", data).then((res) => {
-      data._id = res.data;
-      addUsertoTable(data);
-    });
+
+  const loginUser = (data) => {
+    axios.post("http://localhost:5000/login", data).then((res) => {});
   };
   let personalSet = {
     name: "",
@@ -52,7 +50,7 @@ const ModalLogin = ({ isOpened, children, onClose, addUsertoTable }) => {
             <br />
             <button
               onClick={() => {
-                addUser(personalSet);
+                loginUser(personalSet);
                 onClose();
               }}
               style={{ margin: "5%" }}

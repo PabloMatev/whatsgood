@@ -3,18 +3,19 @@ const { populate, collection } = require("../models/user.model");
 let User = require("../models/user.model");
 const bcrypt = require("bcrypt");
 
-router.route("/users").get((req, res) => {
-  User.find()
-    .then((users) => res.json(users))
-    .catch((err) => res.status(400).json("error: " + err));
-});
-// // add user
+// router.route("/users").get((req, res) => {
+//   User.find()
+//     .then((users) => res.json(users))
+//     .catch((err) => res.status(400).json("error: " + err));
+// });
+
+// // // add user
 router.route("/users").post(async (req, res) => {
-  const saltPassword = await bcrypt.genSalt(2);
-  const securePassword = await bcrypt.hash(req.body.password, saltPassword);
+  // const saltPassword = await bcrypt.genSalt(2);
+  // const securePassword = await bcrypt.hash(req.body.password, saltPassword);
 
   const username = req.body.username;
-  const password = securePassword;
+  const password = req.body.password;
   const email = req.body.email;
   const newUser = new User({
     username,
@@ -33,6 +34,33 @@ router.route("/users").post(async (req, res) => {
     })
     .catch((err) => res.status(400).json("error: " + err));
 });
+// login check
+router.route("/users").get((req, res) => {
+  User.find({ email: req.body.email })
+    .then((user) => {
+      if (req.body.password === user[0].password) {
+        res.json("Valid user");
+      }
+    })
+    .catch((err) => res.status(400).json("error" + err));
+  // if (user) {
+  //   bcrypt.compare(
+  //     req.params.password,
+  //     user.password,
+  //     function (err, result) {
+  //       if (err) {
+  //         res.json(err);
+  //       }
+  //       if (result) {
+  //         res.json("login success", result);
+  //       } else {
+  //         res.json("password does not match");
+  //       }
+  //     }
+  //   );
+  // }
+});
+
 //delete user
 router.route("/users/:id").delete((req, res) => {
   User.findByIdAndDelete(req.params.id)
@@ -46,6 +74,7 @@ router.route("/users/:id").delete((req, res) => {
       return res.status(404).send("err" + err);
     });
 });
+
 // update user
 router.route("/users/:id").patch((req, res) => {
   const name = req.body.name;
@@ -73,4 +102,3 @@ router.route("/users/:id").patch((req, res) => {
 });
 
 module.exports = router;
-//
