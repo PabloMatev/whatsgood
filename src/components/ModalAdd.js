@@ -10,7 +10,7 @@ const ModalAdd = ({ isOpened, onClose }) => {
     return null;
   }
   const addUser = (data) => {
-    axios.post("http://localhost:5000/users", data).then((res) => {});
+    axios.post("http://localhost:5000/users", data);
   };
   let personalSet = {
     name: "",

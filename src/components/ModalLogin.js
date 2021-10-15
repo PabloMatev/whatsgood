@@ -5,13 +5,19 @@ import axios from "axios";
 
 const portalRoot = document.getElementById("portal-root");
 
-const ModalLogin = ({ isOpened, children, onClose, addUsertoTable }) => {
+const ModalLogin = ({ isOpened, children, onClose, setUser }) => {
   if (!isOpened) {
     return null;
   }
 
   const loginUser = (data) => {
-    axios.post("http://localhost:5000/login", data).then((res) => {});
+    axios.post("http://localhost:5000/login", data).then((res) => {
+      if (res.data.message === "user exists") {
+        setUser(res.data.loggedUser);
+      } else if (res.data.message === "user doesn't exist") {
+        alert("Incorrect Credentials");
+      }
+    });
   };
   let personalSet = {
     name: "",

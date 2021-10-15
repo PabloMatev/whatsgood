@@ -35,31 +35,53 @@ router.route("/users").post(async (req, res) => {
     .catch((err) => res.status(400).json("error: " + err));
 });
 // login check
-router.route("/users").get((req, res) => {
-  User.find({ email: req.body.email })
-    .then((user) => {
-      if (req.body.password === user[0].password) {
-        res.json("Valid user");
+router.route("/login").post((req, res) => {
+  User.findOne(
+    { email: req.body.email, password: req.body.password },
+    function (err, user) {
+      if (err) {
+        console.log(err);
       }
-    })
-    .catch((err) => res.status(400).json("error" + err));
-  // if (user) {
-  //   bcrypt.compare(
-  //     req.params.password,
-  //     user.password,
-  //     function (err, result) {
-  //       if (err) {
-  //         res.json(err);
-  //       }
-  //       if (result) {
-  //         res.json("login success", result);
-  //       } else {
-  //         res.json("password does not match");
-  //       }
-  //     }
-  //   );
-  // }
+      var message;
+      if (user) {
+        console.log(user);
+
+        message = "user exists";
+        console.log(message);
+      } else {
+        message = "user doesn't exist";
+        console.log(message);
+      }
+      res.json({ message: message, loggedUser: user });
+    }
+  );
 });
+// .then((user) => {
+//   if (req.body.password === user[0].password) {
+//     res.json(user[0]);
+//   } else {
+//     res.json("false");
+//   }
+// })
+// .catch((err) => res.status(400).json("error" + err));
+// }
+// if (user) {
+//   bcrypt.compare(
+//     req.params.password,
+//     user.password,
+//     function (err, result) {
+//       if (err) {
+//         res.json(err);
+//       }
+//       if (result) {
+//         res.json("login success", result);
+//       } else {
+//         res.json("password does not match");
+//       }
+//     }
+//   );
+// }
+// });
 
 //delete user
 router.route("/users/:id").delete((req, res) => {

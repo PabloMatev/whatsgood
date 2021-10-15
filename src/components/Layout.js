@@ -4,41 +4,27 @@ import axios from "axios";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 export default class Layout extends Component {
+  setUser = (user) => {
+    this.setState({ user: user, isLoggedin: true });
+    console.log(this.state);
+  };
   constructor(props) {
     super(props);
 
     this.state = {
       isModalOpened: false,
+      user: {},
+      isLoggedin: false,
     };
   }
   render() {
     return (
       <Router>
         <Switch>
-          {/* <Route
-          path="/table"
-          exact
-          render={(props) => (
-            <Table
-              addUsertoState={this.addUsertoState}
-              sortState={this.sortState}
-              sortTable={this.sortTable}
-              data={this.state.dataSet}
-              {...props}
-            />
-          )}
-          /> */}
-          <Route path="/home" exact component={Homepage} />
-          {/* <Route
-          path="/user/:id"
-          render={(props) => (
-            <Information
-              updateRow={this.updateRow}
-              dataset={this.idCheck(props.match.params.id)}
-              {...props}
-            />
-          )}
-          /> */}
+          <Route
+            path="/home"
+            render={() => <Homepage setUser={this.setUser} />}
+          />
         </Switch>
       </Router>
     );

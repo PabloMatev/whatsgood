@@ -20,6 +20,7 @@ export default class Homepage extends Component {
             Login
           </button>
           <ModalLogin
+            setUser={this.props.setUser}
             addUsertoTable={this.addUsertoTable}
             isOpened={this.state.isModalLoginOpened}
             onClose={() => this.setState({ isModalLoginOpened: false })}
