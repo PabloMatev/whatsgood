@@ -19,6 +19,7 @@ const ModalLogin = ({ isOpened, children, onClose, setUser }) => {
       }
     });
   };
+  let sum = 3069;
   let personalSet = {
     name: "",
     email: "",
@@ -62,6 +63,15 @@ const ModalLogin = ({ isOpened, children, onClose, setUser }) => {
               style={{ margin: "5%" }}
             >
               asd
+            </button>
+            <button
+              onClick={() => {
+                let sumP = +sum + sum * 0.4;
+                sum = sumP;
+                console.log(sumP);
+              }}
+            >
+              %
             </button>
           </div>
         </div>
